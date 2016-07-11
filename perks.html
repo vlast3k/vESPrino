@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>vESPrino - IoT in a dongle</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+        <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        .credits, .result, .creditsLeft {
+            text-align: center;
+        }
+        .credits {
+            font-weight: bold;
+            font-size:150%;
+        }
+
+    </style>
+
+
+
+</head>
+
+<body id="page-top">
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-4">       
+            <table class="table table-hover table-bordered table-condensed">
+                <tr>
+                    <th>Perk</th>
+                    <th>Credits</th>
+                    <th>Quantity</th>
+                    <th>Sub-total</th>
+                </tr>
+                <tr>
+                    <td>vESPrino</td>
+                    <td class="credits">3</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr>
+                    <td>vESPrino Bare</td>
+                    <td class="credits">2</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="warning">
+                    <td>Light (L1)</td>
+                    <td class="credits">1</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="warning">
+                    <td>Light (L2)</td>
+                    <td class="credits">2</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="success">
+                    <td>Temp/Pressure</td>
+                    <td class="credits">1</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="success">
+                    <td>Temp/Humidity</td>
+                    <td class="credits">2</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="success">
+                    <td>Temp/Press/Hum</td>
+                    <td class="credits">3</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="info">
+                    <td>Display OLED</td>
+                    <td class="credits">2</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="info">
+                    <td>Display LCD</td>
+                    <td class="credits">2</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr  class="warning">
+                    <td>Servo</td>
+                    <td class="credits">1</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="warning">
+                    <td>Relay</td>
+                    <td class="credits">1</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="warning">
+                    <td>PIR</td>
+                    <td class="credits">1</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="danger">
+                    <td>RFID</td>
+                    <td class="credits">4</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr class="success">
+                    <td>Gesture Sensor</td>
+                    <td class="credits">5</td>
+                    <td>
+                        <select class="selectCredits form-control"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>            
+                    </td>
+                    <td class="result"> </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><b>Credits Left</b></td>
+                    <td id="creditsLeft" style="font-weight:bold;text-align:center;font-size:130%">0</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Total</td>
+                    <td>
+                        <select class="totalCredits form-control">
+                           <option value="4">4 (15 &euro;)</option>
+                           <option value="6">6 (19 &euro;)</option>
+                           <option value="9">9 (29 &euro;)</option>
+                           <option value="13">13 (39 &euro;)</option>
+                           <option value="16">16 (49 &euro;)</option>
+                           <option value="20">20 (59 &euro;)</option>
+                           <option value="24">24 (69 &euro;)</option>
+                           <option value="32">32 (89 &euro;)</option>
+                           <option value="40">40 (109 &euro;)</option>
+                           <option value="48">48 (129 &euro;)</option>
+                        </select>            
+                    
+                    </td>
+                </tr>
+            </table>    
+        </div>
+        <div class="col-md-6">
+           <img src="img/p1.PNG" style="width:600px;height:auto"/>
+           <img src="img/p2.PNG" style="width:600px;height:auto"/>
+           <img src="img/p3.PNG" style="width:600px;height:auto"/>
+        
+        </div>
+    </div>
+</div>    
+
+    <script>
+       function onChangeCredits(event) {
+          var credits = Number($(event.currentTarget).parents("tr").find(".credits").contents()[0].textContent);
+          var count = Number(event.currentTarget[event.currentTarget.selectedIndex].value);
+          $(event.currentTarget).parents("tr").find(".result").contents()[0].textContent = credits * count || " ";
+          //console.log(credits*count);
+          updateCreditsLeft();
+       }
+       
+       function updateCreditsLeft() {
+          var count = 0;
+          var tc = $(".totalCredits")[0];
+          var totalCredits = Number(tc[tc.selectedIndex].value);       
+          $(".result").each(function() { count += Number($(this).contents()[0].textContent)} )
+          $("#creditsLeft")[0].textContent = totalCredits - count;
+       }
+
+       $('.selectCredits').change(onChangeCredits);
+       $('.totalCredits').change(updateCreditsLeft);
+    
+    </script>
+
+</body>
+
+</html>
