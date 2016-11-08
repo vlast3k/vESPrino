@@ -62,6 +62,8 @@ void setup() {
    * Exercise 2b: press button, change led
    */
    ex2_attachInterrupt(ex2b_onBttnChange_led);
+   oledON();
+   WiFi.mode(WIFI_OFF);
 }
 //
 //void oledON() {
