@@ -1,0 +1,53 @@
+<head>
+  <link href="https://vjs.zencdn.net/7.10.2/video-js.css" rel="stylesheet" />
+
+  <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+  <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
+</head>
+
+<body>
+  <video
+    id="my-video"
+    class="video-js"
+    controls
+    width="1000"
+  
+    preload="auto"
+    data-setup="{}"
+  >
+    <source src="https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4" type="video/mp4" />
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
+  </video>
+
+  <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
+  <script>
+          var scheduledTime = new Date(Date.UTC(2021, 1, 10, 6, 0, 0))
+        console.log(scheduledTime);
+        console.log((new Date().getTime() - scheduledTime.getTime())/1000);
+    var cc = videojs.getComponent('ControlBar');
+    cc.prototype.options_.children = ['fullscreenToggle', 'bigPlayButton'];
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    if (document.getElementById("my-video")) {
+      videojs("my-video").ready(function() {
+        var started = false;
+  
+        this.on('pause', function() {
+          this.play();
+        });
+        this.on('play', function() {
+          if (!started) {
+            this.currentTime((new Date().getTime() - scheduledTime.getTime())/1000);
+            started = true;
+          }
+        });
+      });
+    }
+  </script>
+
+</body>
