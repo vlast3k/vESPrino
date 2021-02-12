@@ -32,11 +32,13 @@
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
       <video class="video-js"  id="vid1"  muted controls  width="720" preload="auto" data-setup="{}" ></video>
-      <a target="_blank"  id="link1" > </a>
+      <a target="_blank"  id="link1" > 
+        <img   id="img1" width="100"/>
+      </a>
     </div>
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
       <video class="video-js"  id="vid2"  muted controls  width="720" preload="auto" data-setup="{}" ></video>
-      <a target="_blank"  id="link2" > </a>
+      <a target="_blank"  id="link2" > <img   id="img2" width="100"/></a>
     </div>
   </div>      
 
@@ -44,44 +46,68 @@
   <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
   <script>
     const zp = (num, places) => String(num).padStart(places, '0')
-    var config = generateTrack("vid1").concat(generateTrack("vid2"));
-    var config2 = [
-    { track: "vid1", start:"2021,1,11,6,0,0", src: "http://localhost:8080/1min.mp4",
-        type: "video"},
-        { track: "vid1", start:"2021,1,11,4,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
-        type: "video"},
-        { track: "vid1", start:"2021,1,11,1,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
-        type: "video"},
-        { track: "vid1", start:"2021,1,11,8,5,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-        { track: "vid1", start:"2021,1,11,8,6,0", src: "http://localhost:8080/1min.mp4", type: "link"},
-        { track: "vid1", start:"2021,1,11,8,8,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-        { track: "vid1", start:"2021,1,11,7,40,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-        { track: "vid1", start:"2021,1,11,7,31,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-        { track: "vid1", start:"2021,1,11,7,32,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-        { track: "vid1", start:"2021,1,11,7,33,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-        { track: "vid1", start:"2021,1,11,7,34,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-        { track: "vid1", start:"2021,1,11,7,35,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-        { track: "vid1", start:"2021,1,11,7,36,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-        { track: "vid1", start:"2021,1,11,9,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
-        type: "video"},
-        { track: "vid1", start:"2021,1,11,8,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
-        type: "video"},
-        { track: "vid2", start:"2021,1,11,5,30,0", src: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_MmI0OWM2M2EtYTFkYS00Y2M3LWIyOWMtMzdlMzJjMGI5NGFi%40thread.v2/0?context=%7b%22Tid%22%3a%2242f7676c-f455-423c-82f6-dc2d99791af7%22%2c%22Oid%22%3a%22debc9f8e-dcd6-44ec-a997-3e30ef1cc344%22%7d",
-        type: "link"}
+    var ZOOM="https://raw.githubusercontent.com/vlast3k/vESPrino/gh-pages/dkom2021/zoom_logo.png";
+    var TEAMS="https://raw.githubusercontent.com/vlast3k/vESPrino/gh-pages/dkom2021/teams_logo.png";
+    var TIMER="http://vlast3k.github.io/vESPrino/dkom2021/timer1.mp4";
+    var KEYNOTE="http://vlast3k.github.io/vESPrino/dkom2021/keynote1.mp4";
+    var SESSION="http://vlast3k.github.io/vESPrino/dkom2021/1min.mp4";
+    var SESSIONZOOM="http://vlast3k.github.io/vESPrino/dkom2021/1min.mp4zoom";
+    var SESSIONTEAMS="http://vlast3k.github.io/vESPrino/dkom2021/1min.mp4teams";
+    var TREE="https://www.sciencenewsforstudents.org/wp-content/uploads/2020/04/1030_LL_trees-1028x579.png";
+    var tr1 = [{start:0, type:"video", src:TIMER},
+               {start: 10, type:"video", src:KEYNOTE},
+               {start: 30, type:"video", src:SESSION},
+               {start: 40, type:"video", src:TIMER},
+               {start: 50, type:"link", src:SESSIONTEAMS},
+               {start: 60, type:"video", src:TIMER},
+               {start: 70, type:"video", src:SESSION},
+               {start: 80, type:"video", src:TIMER},
+               {start: 90, type:"video", src:SESSION}]
+    var tr2 = [{start:0, type:"none", src:SESSIONTEAMS},
+               {start: 40, type:"video", src:TIMER},
+               {start: 50, type:"link", src:SESSIONZOOM},
+               {start: 60, type:"video", src:TIMER},
+               {start: 70, type:"link", src:SESSIONTEAMS},
+               {start: 80, type:"video", src:TIMER},
+               {start: 90, type:"video", src:SESSION}]
+  
+    var config = generateTrack("vid1", tr1).concat(generateTrack("vid2", tr2));
+    // var config2 = [
+    // { track: "vid1", start:"2021,1,11,6,0,0", src: "http://localhost:8080/1min.mp4",
+    //     type: "video"},
+    //     { track: "vid1", start:"2021,1,11,4,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
+    //     type: "video"},
+    //     { track: "vid1", start:"2021,1,11,1,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
+    //     type: "video"},
+    //     { track: "vid1", start:"2021,1,11,8,5,0", src: "http://localhost:8080/1min.mp4", type: "video"},
+    //     { track: "vid1", start:"2021,1,11,8,6,0", src: "http://localhost:8080/1min.mp4", type: "link"},
+    //     { track: "vid1", start:"2021,1,11,8,8,0", src: "http://localhost:8080/1min.mp4", type: "video"},
+    //     { track: "vid1", start:"2021,1,11,7,40,0", src: "http://localhost:8080/1min.mp4", type: "video"},
+    //     { track: "vid1", start:"2021,1,11,7,31,0", src: "http://localhost:8080/1min.mp4", type: "video"},
+    //     { track: "vid1", start:"2021,1,11,7,32,0", src: "http://localhost:8080/1min.mp4", type: "video"},
+    //     { track: "vid1", start:"2021,1,11,7,33,0", src: "http://localhost:8080/1min.mp4", type: "video"},
+    //     { track: "vid1", start:"2021,1,11,7,34,0", src: "http://localhost:8080/1min.mp4", type: "video"},
+    //     { track: "vid1", start:"2021,1,11,7,35,0", src: "http://localhost:8080/1min.mp4", type: "video"},
+    //     { track: "vid1", start:"2021,1,11,7,36,0", src: "http://localhost:8080/1min.mp4", type: "video"},
+    //     { track: "vid1", start:"2021,1,11,9,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
+    //     type: "video"},
+    //     { track: "vid1", start:"2021,1,11,8,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
+    //     type: "video"},
+    //     { track: "vid2", start:"2021,1,11,5,30,0", src: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_MmI0OWM2M2EtYTFkYS00Y2M3LWIyOWMtMzdlMzJjMGI5NGFi%40thread.v2/0?context=%7b%22Tid%22%3a%2242f7676c-f455-423c-82f6-dc2d99791af7%22%2c%22Oid%22%3a%22debc9f8e-dcd6-44ec-a997-3e30ef1cc344%22%7d",
+    //     type: "link"}
 
       
-    ];
+    // ];
 
     function d2s(d) {return `${d.getFullYear()},${zp(d.getMonth(),2)},${zp(d.getDate(),2)},${zp(d.getHours(),2)},${zp(d.getMinutes(),2)},${zp(d.getSeconds(),2)}`};
-    function generateTrack(track) {
+    function generateTrack(track, cfg) {
       var now = Date.now();
       var c = [];
-      for (var i=0; i < 100; i++ ) {
-        var d = new Date(now);
-        var sd = d2s(d);
-        c.push({track:track, start: sd, src:"http://vlast3k.github.io/vESPrino/dkom2021/1min.mp4", type: ((i%2 == 0) ? "video" : "link")});
-        now += 10000;
-      }
+      //var d = new Date(now);
+      cfg.forEach(x => c.push({track:track, 
+                               start: d2s(new Date(now + x.start*1000)), 
+                               src:x.src, 
+                               type: x.type}))
       return c;
     }
     
@@ -109,6 +135,7 @@
       var real   = findCurrentSession(track);
       var player = videojs.players[track];
       var linkId = track.replace("vid", "link")
+      var imgId = track.replace("vid", "img")
       if (!real) {
         console.log("real session not found!");
       }
@@ -123,12 +150,22 @@
           currentSession[track] = real;
            document.getElementById(track).style.display="block";
            document.getElementById(linkId).style.display="none";
+           document.getElementById(linkId).style.display="none";
         } else if (real.type === "link") {
           player && player.pause();
           document.getElementById(track).style.display="none";
           document.getElementById(linkId).style.display="block";
           document.getElementById(linkId).href = real.src;
-          document.getElementById(linkId).innerHTML = "link";
+          //document.getElementById(linkId).innerHTML = "link";
+          document.getElementById(imgId).src = real.src.indexOf("teams") > -1 ?  TEAMS : ZOOM;
+          currentSession[track] = real;
+        } else if (real.type === "none") {
+          player && player.pause();
+          document.getElementById(track).style.display="none";
+          document.getElementById(linkId).style.display="block";
+          document.getElementById(linkId).href = ""
+          document.getElementById(imgId).src = TREE;
+          //document.getElementById(linkId).innerHTML = "NO SESSION";
           currentSession[track] = real;
         }
         
