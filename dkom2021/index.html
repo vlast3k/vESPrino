@@ -46,14 +46,14 @@
   <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
   <script>
     const zp = (num, places) => String(num).padStart(places, '0')
-    var ZOOM="https://raw.githubusercontent.com/vlast3k/vESPrino/gh-pages/dkom2021/zoom_logo.png";
-    var TEAMS="https://raw.githubusercontent.com/vlast3k/vESPrino/gh-pages/dkom2021/teams_logo.png";
-    var TIMER="http://vlast3k.github.io/vESPrino/dkom2021/timer1.mp4";
-    var KEYNOTE="http://vlast3k.github.io/vESPrino/dkom2021/keynote1.mp4";
-    var SESSION="http://vlast3k.github.io/vESPrino/dkom2021/1min.mp4";
+    var ZOOM="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/zoom_logo.png";
+    var ZIMA ="https://sap.sharepoint.com/sites/124250/Shared%20Documents/zimacap.PNG"
+    var TEAMS="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/teams_logo.png";
+    var TIMER="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/timer1.mp4";
+    var KEYNOTE="https://sap.sharepoint.com/sites/124250/Shared%20Documents/keynote1.mp4";
+    var SESSION="https://sap.sharepoint.com/sites/124250/Shared%20Documents/1min.mp4";
     var SESSIONZOOM="http://vlast3k.github.io/vESPrino/dkom2021/1min.mp4zoom";
     var SESSIONTEAMS="http://vlast3k.github.io/vESPrino/dkom2021/1min.mp4teams";
-    var ZIMA ="https://sap.sharepoint.com/sites/124250/Shared%20Documents/zimacap.PNG"
     var TREE="https://www.sciencenewsforstudents.org/wp-content/uploads/2020/04/1030_LL_trees-1028x579.png";
     var tr1 = [{start:0, type:"video", src:TIMER},
                {start: 10, type:"video", src:KEYNOTE},
@@ -71,6 +71,7 @@
                {start: 70, type:"link", src:SESSIONTEAMS},
                {start: 80, type:"video", src:TIMER},
                {start: 90, type:"video", src:SESSION}]
+  
     var config = generateTrack("vid1", tr1).concat(generateTrack("vid2", tr2));
     // var config2 = [
     // { track: "vid1", start:"2021,1,11,6,0,0", src: "http://localhost:8080/1min.mp4",
