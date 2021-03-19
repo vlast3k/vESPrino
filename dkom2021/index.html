@@ -1,198 +1,316 @@
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-  <link href="https://vjs.zencdn.net/7.10.2/video-js.css" rel="stylesheet" />
-  <!-- <link href="http://localhost:8080/dkom.css" rel="stylesheet" /> -->
-  <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
-  <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
-  <title>d-kom 2021 Sofia</title>
-  <style>
-      .nav-pills .nav-link.active {
-        background-color: rgb(255, 200, 61);
-        color: rgb(27, 26, 25);
-      }
-      .nav-pills .nav-link {
-        color: whitesmoke;
-      }
-    </style>
-</head>
-
-<body style="background-color: #222222;">
-  <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Track 1</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Track 2</button>
-    </li>
-  </ul>
-  <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-      <video class="video-js"  id="vid1"  muted controls  width="720" preload="auto" data-setup="{}" ></video>
-      <a target="_blank"  id="link1" > 
-        <img   id="img1" width="100"/>
-      </a>
-    </div>
-    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-      <video class="video-js"  id="vid2"  muted controls  width="720" preload="auto" data-setup="{}" ></video>
-      <a target="_blank"  id="link2" > <img   id="img2" width="100"/></a>
-    </div>
-  </div>      
-
-
-  <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
-  <script>
-    const zp = (num, places) => String(num).padStart(places, '0')
-    var ZOOM="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/zoom_logo.png";
-    var ZIMA ="https://sap.sharepoint.com/sites/124250/Shared%20Documents/zimacap.PNG"
-    var TEAMS="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/teams_logo.png";
-    var TIMER="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/timer1.mp4";
-    var KEYNOTE="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/keynote1.mp4";
-    var SESSION="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/1min.mp4";
-    var SESSIONZOOM="http://vlast3k.github.io/vESPrino/dkom2021/1min.mp4zoom";
-    var SESSIONTEAMS="http://vlast3k.github.io/vESPrino/dkom2021/1min.mp4teams";
-    var TREE="https://www.sciencenewsforstudents.org/wp-content/uploads/2020/04/1030_LL_trees-1028x579.png";
-    var tr1 = [{start:0, type:"video", src:TIMER},
-               {start: 10, type:"video", src:KEYNOTE},
-               {start: 30, type:"video", src:SESSION},
-               {start: 40, type:"video", src:TIMER},
-               {start: 50, type:"link", src:SESSIONTEAMS},
-               {start: 60, type:"video", src:TIMER},
-               {start: 70, type:"video", src:SESSION},
-               {start: 80, type:"video", src:TIMER},
-               {start: 90, type:"video", src:SESSION}]
-    var tr2 = [{start:0, type:"none", src:SESSIONTEAMS},
-               {start: 40, type:"video", src:TIMER},
-               {start: 50, type:"link", src:SESSIONZOOM},
-               {start: 60, type:"video", src:TIMER},
-               {start: 70, type:"link", src:SESSIONTEAMS},
-               {start: 80, type:"video", src:TIMER},
-               {start: 90, type:"video", src:SESSION}]
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   
-    var config = generateTrack("vid1", tr1).concat(generateTrack("vid2", tr2));
-    // var config2 = [
-    // { track: "vid1", start:"2021,1,11,6,0,0", src: "http://localhost:8080/1min.mp4",
-    //     type: "video"},
-    //     { track: "vid1", start:"2021,1,11,4,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
-    //     type: "video"},
-    //     { track: "vid1", start:"2021,1,11,1,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
-    //     type: "video"},
-    //     { track: "vid1", start:"2021,1,11,8,5,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-    //     { track: "vid1", start:"2021,1,11,8,6,0", src: "http://localhost:8080/1min.mp4", type: "link"},
-    //     { track: "vid1", start:"2021,1,11,8,8,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-    //     { track: "vid1", start:"2021,1,11,7,40,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-    //     { track: "vid1", start:"2021,1,11,7,31,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-    //     { track: "vid1", start:"2021,1,11,7,32,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-    //     { track: "vid1", start:"2021,1,11,7,33,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-    //     { track: "vid1", start:"2021,1,11,7,34,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-    //     { track: "vid1", start:"2021,1,11,7,35,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-    //     { track: "vid1", start:"2021,1,11,7,36,0", src: "http://localhost:8080/1min.mp4", type: "video"},
-    //     { track: "vid1", start:"2021,1,11,9,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
-    //     type: "video"},
-    //     { track: "vid1", start:"2021,1,11,8,0,0", src: "https://8b6677f5-85f0-495d-81db-22121c6c3ce9.s3.eu-central-1.amazonaws.com/12h.mp4",
-    //     type: "video"},
-    //     { track: "vid2", start:"2021,1,11,5,30,0", src: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_MmI0OWM2M2EtYTFkYS00Y2M3LWIyOWMtMzdlMzJjMGI5NGFi%40thread.v2/0?context=%7b%22Tid%22%3a%2242f7676c-f455-423c-82f6-dc2d99791af7%22%2c%22Oid%22%3a%22debc9f8e-dcd6-44ec-a997-3e30ef1cc344%22%7d",
-    //     type: "link"}
-
-      
-    // ];
-
-    function d2s(d) {return `${d.getFullYear()},${zp(d.getMonth(),2)},${zp(d.getDate(),2)},${zp(d.getHours(),2)},${zp(d.getMinutes(),2)},${zp(d.getSeconds(),2)}`};
-    function generateTrack(track, cfg) {
-      var now = Date.now();
-      var c = [];
-      //var d = new Date(now);
-      cfg.forEach(x => c.push({track:track, 
-                               start: d2s(new Date(now + x.start*1000)), 
-                               src:x.src, 
-                               type: x.type}))
-      return c;
-    }
-    
-    function findCurrentSession(track) {
-      var d = new Date();
-      var sd = d2s(d);
-      return  config.filter(x => x.track === track)
-                    .sort((x,y) => -x.start.localeCompare(y.start))
-                    .find(x => x.start.localeCompare(sd) <= 0);
-    }
-
-    function onVJSReady() {
-      this.on('play', function ()  {
-          var ses = findCurrentSession(this.id());
-          var s = ses.start.split(",");
-          var d = new Date(s[0], s[1], s[2], s[3], s[4], s[5]);
-          var t = (Date.now() - d.getTime())/1000;
-          console.log(t)
-          this.currentTime((Date.now() - d.getTime())/1000);
-        });
-    }
-
-    function setSession(track) {
-      var active = currentSession[track];
-      var real   = findCurrentSession(track);
-      var player = videojs.players[track];
-      var linkId = track.replace("vid", "link")
-      var imgId = track.replace("vid", "img")
-      if (!real) {
-        console.log("real session not found!");
-      }
-      if (!active || active.start !== real.start) {
-        console.log("Switching........")
-        console.log(active);
-        console.log(real);
-        if (real.type === "video" && player) {
-          player.src({type: "video/mp4", src: real.src});
-          //if (!player.paused()) 
-            player.play();
-          currentSession[track] = real;
-           document.getElementById(track).style.display="block";
-           document.getElementById(linkId).style.display="none";
-           document.getElementById(linkId).style.display="none";
-        } else if (real.type === "link") {
-          player && player.pause();
-          document.getElementById(track).style.display="none";
-          document.getElementById(linkId).style.display="block";
-          document.getElementById(linkId).href = real.src;
-          //document.getElementById(linkId).innerHTML = "link";
-          document.getElementById(imgId).src = real.src.indexOf("teams") > -1 ?  TEAMS : ZOOM;
-          currentSession[track] = real;
-        } else if (real.type === "none") {
-          player && player.pause();
-          document.getElementById(track).style.display="none";
-          document.getElementById(linkId).style.display="block";
-          document.getElementById(linkId).href = ""
-          document.getElementById(imgId).src = ZIMA;
-          //document.getElementById(linkId).innerHTML = "NO SESSION";
-          currentSession[track] = real;
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://vjs.zencdn.net/7.10.2/video-js.css" rel="stylesheet" />
+    <!-- <link href="http://localhost:8080/dkom.css" rel="stylesheet" /> -->
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
+    <title>d-kom 2021 Sofia</title>
+    <style>
+        .nav-pills .nav-link.active {
+          background-color: rgb(255, 200, 61);
+          color: rgb(27, 26, 25);
         }
-        
+        .nav-pills .nav-link {
+          color: whitesmoke;
+        }
+        .slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}        
+      </style>
+  </head>
+  
+  <body style="background-color: #222222;">
+    <div id="ct" style="color:white"></div>
+    <div class="slidecontainer">
+      <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+    </div>
+    <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist"></ul>
+    <div class="tab-content" id="pills-tabContent"></div>      
+  
+    <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- <script src="http://localhost:8080/contentSubmissions.js?878"></script>  -->
+    <script src="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/contentSubmissions.js?879"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script>
+      var ZOOM="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/zoom_logo.png";
+      var ZIMA ="https://sap.sharepoint.com/sites/124250/Shared%20Documents/zimacap.PNG"
+      var TEAMS="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/teams_logo.png";
+      var VID1="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/1min.mp4";
+      var VID2="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/keynote1.mp4";
+      var Tracks = [{id:"Keynote"},{id:"Jupiter"},{id:"Earth"},{id:"Mars"},{id:"Saturn"},{id:"Venus"},{id:"Neptune"}] ;
+      //Tracks = [] ;
+    
+      var cfg = JSON.parse(atob(res)).map(x => {return {
+        title: x.Title,
+        abstract: x.Abstract,
+        contentType: x.ContentType0 && x.ContentType0.Value,
+        duration: x.Duration_x0028_min_x0029_ && x.Duration_x0028_min_x0029_.Value*60,
+        presenter1: x.Presenter1 && x.Presenter1.DisplayName,
+        presenter2: x.Presenter2 && x.Presenter2.DisplayName,
+        presenter3: x.Presenter3 && x.Presenter3.DisplayName,
+        start: new Date(x.Start),
+        liveUrl: x.ConnectionURL,
+        recordingUrl: x.Recording,
+        track: x.Track && x.Track.Value,
+        warmup: 5*60*1000
+      }});
+      var currentSession = {};
+      var currentTimeMillis = null;//Date.now();
+      var timeStarted = Date.now();//Date.now();
+      currentTimeMillis = Date.now() + 1*1000;
+      startTimeTimer(1);
+      function addTestTrack() {
+        function addTestSession(title, durationInSec, startInSec, warmupSec, vid) {
+          cfg.push({title:title, duration:durationInSec, start:new Date(Date.now() + startInSec*1000),
+            //recordingUrl:vid,
+            liveUrl:vid,
+                    track:"Test", warmup :warmupSec*1000});
+
+        }
+        addTestSession("t1", 5, 10, 5, VID1);      
+        addTestSession("t2", 15, 30, 0, VID1);
+        addTestSession("t3", 25, 60, 5, VID1);
+        addTestSession("t4", 35, 90, 10, VID1);
+        addTestSession("t5", 10, 120, 5, VID1);
+        addTestSession("t6", 15, 150, 0, VID1);
+        Tracks.push({id:"Test"});
       }
-    }
+      //addTestTrack();
+      console.log("res is: " + cfg.length);
+   
+  
+      function createPills(ids) {
+        function generatePillTab(id, isActive) {
+          return `<li class='nav-item track-${id}' id="pills-${id}-li" role='presentation'>
+                    <button class='nav-link ${isActive?"active":""}' id='pills-${id}-tab' data-bs-toggle='pill' data-bs-target='#pills-${id}' type='button' role='tab' aria-controls='pills-${id}' aria-selected='true'>${id}</button>
+                  </li>\n`;
+        }
+        function generatePillContent(id, isActive) {
+          return `<div class="track-${id} tab-pane fade ${isActive?"show active":""}" id="pills-${id}" role="tabpanel" aria-labelledby="pills-${id}-tab">
+                <h5 class="title" style="color:white">Card title</h5>
+                <video class="video-js"  id="${id}"  muted controls  width="720" preload="auto" data-setup="{}" ></video>
+                <a target="_blank" class="link" id="link${id}" > <img id="img${id}" width="100"/> </a>
+          </div>\n`;
+        }
+        ids.forEach(id => {
+          document.getElementById('pills-tab').innerHTML += generatePillTab(id.id, id===ids[0]);
+          document.getElementById('pills-tabContent').innerHTML += generatePillContent(id.id, id===ids[0]);
+        });
+      }
+  
+      function setCurrentTime(value) {
+        currentTimeMillis = value;
+      }
+  
+      function getCurrentTime() {
+        return currentTimeMillis ||  Date.now() ;
+      }
 
-    // document.getElementById("vid1").style.display="none";
-    // document.getElementById("vid2").style.display="none";
-    document.getElementById("link1").style.display="none";
-    document.getElementById("link2").style.display="none";
-    videojs.getComponent('ControlBar').prototype.options_.children = ["playToggle",'fullscreenToggle', "volumePanel"];
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    var currentSession = {};
+      var fastSpeedInterval;
+      function startTimeTimer(speed) {
+        var speed = speed || 1;
+        clearInterval(fastSpeedInterval);
+        fastSpeedInterval = setInterval(() => {currentTimeMillis += speed * 1000}, 1000);
+      }
+  
+      // function fillGaps(track) {
+      //   var sorted = getSessionsInTrack(track);
+      //   var timers = [];
+      //   for (var i=0; i < sorted.length-1; i++) {
+      //     var endTime = sorted[i].start.getTime() + sorted[i].duration*60*1000 - 2000;
+      //     if (endTime < sorted[i+1].start.getTime()) {
+      //       timers.push({title: "Next: " + sorted[i+1].title,
+      //                 track: track,
+      //                 start: new Date(endTime),
+      //                 duration: (sorted[i+1].start.getTime() - endTime)/(60*1000) + 1,
+      //                 recordingUrl: TIMER})
+      //     }
+      //   }
+      //   cfg.push(...timers);
+      // }
+        // var tracks = {};
+        // cfg.forEach(x => tracks[x.track] = true);
+        // return Object.keys(tracks).sort();
+  
+      function getSessionsInTrack(track) {
+        return cfg.filter(x => x.track === track)
+                  .sort((x,y) => x.start.getTime() - y.start.getTime());
+      }
+  
+      function findCurrentSession(track) {
+        var sorted = getSessionsInTrack(track);
+        var i = 0;
+        for (; i < sorted.length && sorted[i].start.getTime() <= getCurrentTime(); i++);  
+        //console.log("current session: "+ track + " : " + i);  
+        return {current: i > 0 &&  sorted[i-1].start.getTime() + sorted[i-1].duration*1000  > getCurrentTime() ? sorted[i-1] : null, 
+                   next: i < sorted.length && getCurrentTime() > sorted[i].start.getTime() - sorted[i].warmup ? sorted[i]  : null};
+      }
+  
+      function onVJSReady() {
+        this.on('play', function ()  {
+            console.log(this.id());
+            var real = currentSession[this.id()];
+            if (!real) return;
+            var t = (getCurrentTime() - real.start.getTime() + real.warmup)/1000;
+            console.log(t)
+            this.currentTime(t);
+          });
+        this.on('loadedmetadata', () => {setSession(this.id())});
+      }
+  
+      function show(id) {
+        document.getElementById(id).style.display="block";
+      }
+  
+      function hide(id) {
+        document.getElementById(id).style.display="none";
+      }
 
-    videojs("vid1", null, onVJSReady);
-    videojs("vid2", null, onVJSReady);
-    setSession("vid1");
-    setSession("vid2");
-    setInterval(() => {
-      setSession("vid1");
-      setSession("vid2");
-    }, 1000);
-    //   videojs("my-video").ready(function ()  {
-    //   });
-    // }
-  </script>
-  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-</body>
+      function hasEnded(s) {
+        if (!videojs.players[s.track]) return false;
+        var vidDur = videojs.players[s.track].duration() * 1000;
+        if (!vidDur) return false;
+        var ct = getCurrentTime();
+        var startedAt = s.start.getTime() - s.warmup;
+        return startedAt + vidDur < ct;
+      }
+
+      function setSession(track) {
+        var tid    = track.id;
+        var tr     = `.track-${tid}`;
+        var player = videojs.players[tid];
+        if (!player) return; //if player for this track is not yet init, skip this run, it wlll be called again by the Interval
+        
+        var c      = findCurrentSession(tid);
+        if (!(c.current || c.next)) {
+          $(tr).hide();
+          $(tr).interval && clearInterval($(tr).interval);
+          player.pause();
+        } else {
+          $(tr).show();
+        }
+
+        var switched = false;
+        var active = currentSession[tid];
+        var currentIsRecordingAndEnded = c.current && c.current.recordingUrl && hasEnded(c.current);
+        console.log(c)
+        if (!c.current || currentIsRecordingAndEnded) {
+          if (!c.next || (active && active.start == c.next.start)) {
+            return; //notging to do: no next, or next already active
+          }
+          currentSession[tid] = c.next;
+          switched = true;
+        } else if (active && (active.start == c.current.start || (c.next && active.start == c.next.start))) {
+          return; //nothing to do: current is playing (decided by findActiveSession), and not yet ended -- OR next is playing as current is null or ended
+        } else { //current is valid AND current is not active
+          currentSession[track.id] = c.current;
+          switched = true;
+        }
+
+        if (switched) {
+          var real = currentSession[tid];
+          console.log("Switching to: " + JSON.stringify(real));
+          $(tr).interval && clearInterval($(tr).interval);
+          if (real.recordingUrl) {
+            player.src({type: "video/mp4", src: real.recordingUrl});
+            player.play();
+            $(tr + " .video-js").show();
+            $(tr + " .link").hide();
+            $(tr + " .title").text(real.title);
+          } else if (real.liveUrl) {
+            player.pause();
+            $(tr).interval = setInterval(() => {updateLiveSession(tid)}, 1000);
+            $(tr + " .video-js").hide();
+            $(tr + " .link").show();
+            $(tr + " .link").attr("href", real.liveUrl);
+            $(tr + " .link img").attr("src", real.liveUrl.indexOf("teams") > -1 ?  TEAMS : ZOOM);
+            updateLiveSession(tid);
+          } 
+        }
+      }
+
+      function updateLiveSession(tid) {
+        var tr     = `.track-${tid}`;
+        var real = currentSession[tid];
+        var diff = real.start.getTime() - getCurrentTime();
+        if (diff > 0) {
+          $(tr + " .title").text("Next Session: " + real.title + " [ in " + diff/1000 + " sec" );
+        } else {
+          $(tr + " .title").text(real.title);
+        }
+      }
+  
+      function updateSessions() {
+        $("#ct").show();
+        //$("#ct").text((getCurrentTime() - timeStarted) / 1000)
+        $("#ct").text(new Date(getCurrentTime()));
+        Tracks.forEach(setSession);
+      }
+  
+      videojs.getComponent('ControlBar').prototype.options_.children = ["playToggle",'fullscreenToggle', "volumePanel"];
+      document.addEventListener('contextmenu', event => event.preventDefault());
+  
+      createPills(Tracks);  
+      Tracks.forEach(t => {
+       // fillGaps(t.id);
+        hide(`link${t.id}`);
+        videojs(`${t.id}`, null, onVJSReady);
+      });
+   
+      setInterval(updateSessions, 1000);
+      updateSessions();
+
+      var slider = document.getElementById("myRange");
+      var output = document.getElementById("demo");
+      slider.setAttribute("min", new Date("Thu Mar 25 2021 09:00:43 GMT+0200").getTime());
+      slider.setAttribute("max", new Date("Thu Mar 25 2021 18:00:43 GMT+0200").getTime());
+      slider.oninput = function() {
+        //$("#ct").text(new Date(getCurrentTime()));
+        setCurrentTime(Number.parseInt(this.value));
+        $("#ct").text(new Date(getCurrentTime()));
+        //console.log(this.value + " " + new Date(Number.parseInt(this.value)));
+      }      
+    </script>
+    <!-- <script src="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/config.js?123"></script>  -->
+   
+  </body>
