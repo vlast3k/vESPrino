@@ -80,6 +80,9 @@
       //Tracks = [] ;
       $("#ct").show();
       $("#browser").text("is safari: " + window.safari + ", vendor: " + navigator.vendor)
+      if (navigator.vendor.indexOf("Apple") > -1) {
+        alert("For Mac and iPhone, please use Chrome or Firefox browser, to load the Agenda correctly")
+      }
     
       var cfg = JSON.parse(atob(res)).map(x => {return {
         title: x.Title,
