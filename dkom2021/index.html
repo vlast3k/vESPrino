@@ -59,10 +59,7 @@
   </head>
   
   <body style="background-color: #222222;">
-    <div id="ct" style="color:white"></div>
-    <div class="slidecontainer">
-      <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-    </div>
+    <div id="divtest"> </div> 
     <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist"></ul>
     <div class="tab-content" id="pills-tabContent"></div>      
   
@@ -77,7 +74,8 @@
       var TEAMS="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/teams_logo.png";
       var VID1="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/1min.mp4";
       var VID2="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/keynote1.mp4";
-      var Tracks = [{id:"Keynote"},{id:"Jupiter"},{id:"Earth"},{id:"Mars"},{id:"Saturn"},{id:"Venus"},{id:"Neptune"}] ;
+      //var Tracks = [{id:"Keynote"},{id:"Jupiter"},{id:"Earth"},{id:"Mars"},{id:"Saturn"},{id:"Venus"},{id:"Neptune"}] ;
+      var Tracks = [{id:"Saturn"}] ;
       //Tracks = [] ;
     
       var cfg = JSON.parse(atob(res)).map(x => {return {
@@ -95,10 +93,18 @@
         warmup: 5*60*1000
       }});
       var currentSession = {};
+      var intervalTimers = {};
       var currentTimeMillis = null;//Date.now();
       var timeStarted = Date.now();//Date.now();
-      currentTimeMillis = Date.now() + 1*1000;
-      startTimeTimer(1);
+      if (window.location.href.indexOf("test") > 1) {
+          currentTimeMillis = Date.now() + 1*1000;
+          startTimeTimer(1);
+          $("#divtest").html(`  
+            <div id="ct" style="color:white;display:block"></div>
+            <div class="slidecontainer">
+              <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            </div>`);
+      }
       function addTestTrack() {
         function addTestSession(title, durationInSec, startInSec, warmupSec, vid) {
           cfg.push({title:title, duration:durationInSec, start:new Date(Date.now() + startInSec*1000),
@@ -223,13 +229,19 @@
         
         var c      = findCurrentSession(tid);
         if (!(c.current || c.next)) {
-          $(".nav " + tr).css("display", "none");
-          $(".tab-pane " + tr).removeClass("active");
-          $(".tab-pane " + tr).removeClass("show");
-          $(".nav " + tr).interval && clearInterval($(tr).interval);
+          $(`#pills-${tid}-li`).css("display", "none");
+          if ($(`#pills-${tid}-tab`).hasClass("active")) {
+            $(`#pills-${tid}-tab`).removeClass("active");
+            $(`#pills-${tid}`).removeClass("active");
+            $(`#pills-${tid}`).removeClass("show");
+          }
+          removeIntervalTimer(tid);
           player.pause();
         } else {
-          $(".nav " + tr).css("display", "block");
+          //$(".nav " + tr).css("display", "block");
+          $(`#pills-${tid}-li`).css("display", "block");
+          $(`#pills-${tid}`).addClass("show");
+//          $(`#pills-${tid}`).addClass(  "active");
           //$(".nav-item " + tr).show();
         }
 
@@ -237,6 +249,10 @@
         var active = currentSession[tid];
         var currentIsRecordingAndEnded = c.current && c.current.recordingUrl && hasEnded(c.current);
         //console.log(c)
+        if (active && (!(c.next || c.current))) {
+          currentSession[tid] = null;
+          return;
+        }
         if (!c.current || currentIsRecordingAndEnded) {
           if (!c.next || (active && active.start == c.next.start)) {
             return; //notging to do: no next, or next already active
@@ -246,38 +262,55 @@
         } else if (active && (active.start == c.current.start || (c.next && active.start == c.next.start))) {
           return; //nothing to do: current is playing (decided by findActiveSession), and not yet ended -- OR next is playing as current is null or ended
         } else { //current is valid AND current is not active
-          currentSession[track.id] = c.current;
+          currentSession[tid] = c.current;
           switched = true;
         }
 
         if (switched) {
           var real = currentSession[tid];
           console.log("Switching to: " + JSON.stringify(real));
-          $(tr).interval && clearInterval($(tr).interval);
+          removeIntervalTimer(tid);
+          //$(`#pills-${tid}`).interval && clearInterval($(`#pills-${tid}`).interval);
           if (real.recordingUrl) {
             player.src({type: "video/mp4", src: real.recordingUrl});
             player.play();
             $(tr + " .video-js").show();
             $(tr + " .link").hide();
             $(tr + " .title").text(real.title);
-          } else if (real.liveUrl) {
+          } else  {
             player.pause();
-            $(".nav " + tr).interval = setInterval(() => {updateLiveSession(tid)}, 1000);
+            startIntervalTimer(tid);
             $(tr + " .video-js").hide();
             $(tr + " .link").show();
             $(tr + " .link").attr("href", real.liveUrl);
-            $(tr + " .link img").attr("src", real.liveUrl.indexOf("teams") > -1 ?  TEAMS : ZOOM);
+            $(tr + " .link img").attr("src", real.liveUrl && real.liveUrl.indexOf("teams") > -1 ?  TEAMS : ZOOM);
             updateLiveSession(tid);
           } 
         }
       }
+      function startIntervalTimer(tid) {
+        intervalTimers[tid] = intervalTimers[tid] || {};
+        intervalTimers[tid].id = setInterval(() => {updateLiveSession(tid)}, 1000);
+        console.log("added interval: " + intervalTimers[tid].id);
+
+      }
+      function removeIntervalTimer(tid) {
+        intervalTimers[tid] = intervalTimers[tid] || {};
+        if (intervalTimers[tid].id) {
+          console.log("removed interval :  " + intervalTimers[tid].id);
+          clearInterval(intervalTimers[tid].id);
+          intervalTimers[tid].id  = null;
+        }
+      }
+
 
       function updateLiveSession(tid) {
+        console.log("Updating session for " + tid);
         var tr     = `.track-${tid}`;
         var real = currentSession[tid];
         var diff = real.start.getTime() - getCurrentTime();
         if (diff > 0) {
-          $(tr + " .title").text("Next Session: " + real.title + " [ in " + diff/1000 + " sec" );
+          $(tr + " .title").text("Next Session: " + real.title + " [ in " + diff/60/1000 + " min ]" );
         } else {
           $(tr + " .title").text(real.title);
         }
@@ -285,9 +318,11 @@
   
       function updateSessions() {
         $("#ct").show();
-        //$("#ct").text((getCurrentTime() - timeStarted) / 1000)
         $("#ct").text(new Date(getCurrentTime()));
         Tracks.forEach(setSession);
+        if ($(".nav-item :visible").length > 0 && $(".nav-item .active").length == 0) {
+          $(".nav-item :visible")[0].click();
+        }
       }
   
       videojs.getComponent('ControlBar').prototype.options_.children = ["playToggle",'fullscreenToggle', "volumePanel"];
