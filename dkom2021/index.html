@@ -60,6 +60,7 @@
   
   <body style="background-color: #222222;">
     <div id="divtest"> </div> 
+    <div id="browser" style="color:white;display: block;"> </div> 
     <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist"></ul>
     <div class="tab-content" id="pills-tabContent"></div>      
   
@@ -77,6 +78,8 @@
       var Tracks = [{id:"Keynote"},{id:"Jupiter"},{id:"Earth"},{id:"Mars"},{id:"Saturn"},{id:"Venus"},{id:"Neptune"}] ;
       //var Tracks = [{id:"Saturn"}] ;
       //Tracks = [] ;
+      $("#ct").show();
+      $("#browser").text("is safari: " + window.safari + ", vendor: " + navigator.vendor)
     
       var cfg = JSON.parse(atob(res)).map(x => {return {
         title: x.Title,
