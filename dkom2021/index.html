@@ -107,6 +107,16 @@
             <div class="slidecontainer">
               <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
             </div>`);
+            var slider = document.getElementById("myRange");
+            var output = document.getElementById("demo");
+            slider.setAttribute("min", new Date("Thu Mar 25 2021 09:00:43 GMT+0200").getTime());
+            slider.setAttribute("max", new Date("Thu Mar 25 2021 18:00:43 GMT+0200").getTime());
+            slider.oninput = function() {
+              //$("#ct").text(new Date(getCurrentTime()));
+              setCurrentTime(Number.parseInt(this.value));
+              $("#ct").text(new Date(getCurrentTime()));
+              //console.log(this.value + " " + new Date(Number.parseInt(this.value)));
+            }      
       }
       function addTestTrack() {
         function addTestSession(title, durationInSec, startInSec, warmupSec, vid) {
@@ -341,16 +351,6 @@
       setInterval(updateSessions, 1000);
       updateSessions();
 
-      var slider = document.getElementById("myRange");
-      var output = document.getElementById("demo");
-      slider.setAttribute("min", new Date("Thu Mar 25 2021 09:00:43 GMT+0200").getTime());
-      slider.setAttribute("max", new Date("Thu Mar 25 2021 18:00:43 GMT+0200").getTime());
-      slider.oninput = function() {
-        //$("#ct").text(new Date(getCurrentTime()));
-        setCurrentTime(Number.parseInt(this.value));
-        $("#ct").text(new Date(getCurrentTime()));
-        //console.log(this.value + " " + new Date(Number.parseInt(this.value)));
-      }      
     </script>
     <!-- <script src="https://sap.sharepoint.com/sites/124250/Shared%20Documents/dkom2021/config.js?123"></script>  -->
    
