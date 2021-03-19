@@ -223,17 +223,20 @@
         
         var c      = findCurrentSession(tid);
         if (!(c.current || c.next)) {
-          $(tr).hide();
-          $(tr).interval && clearInterval($(tr).interval);
+          $(".nav " + tr).css("display", "none");
+          $(".tab-pane " + tr).removeClass("active");
+          $(".tab-pane " + tr).removeClass("show");
+          $(".nav " + tr).interval && clearInterval($(tr).interval);
           player.pause();
         } else {
-          $(tr).show();
+          $(".nav " + tr).css("display", "block");
+          //$(".nav-item " + tr).show();
         }
 
         var switched = false;
         var active = currentSession[tid];
         var currentIsRecordingAndEnded = c.current && c.current.recordingUrl && hasEnded(c.current);
-        console.log(c)
+        //console.log(c)
         if (!c.current || currentIsRecordingAndEnded) {
           if (!c.next || (active && active.start == c.next.start)) {
             return; //notging to do: no next, or next already active
@@ -259,7 +262,7 @@
             $(tr + " .title").text(real.title);
           } else if (real.liveUrl) {
             player.pause();
-            $(tr).interval = setInterval(() => {updateLiveSession(tid)}, 1000);
+            $(".nav " + tr).interval = setInterval(() => {updateLiveSession(tid)}, 1000);
             $(tr + " .video-js").hide();
             $(tr + " .link").show();
             $(tr + " .link").attr("href", real.liveUrl);
