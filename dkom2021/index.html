@@ -89,7 +89,7 @@ $(document).ready(function(){
         alert("For Mac and iPhone, please use Chrome or Firefox browser, to load the Agenda correctly")
       }
     
-      var cfg = JSON.parse(atob(res)).map(x => {return {
+      cfg = JSON.parse(atob(res)).map(x => {return {
         title: x.Title,
         abstract: x.Abstract,
         contentType: x.ContentType0 && x.ContentType0.Value,
@@ -352,7 +352,7 @@ $(document).ready(function(){
         }
         $(tr + " .title").text(real.title);
         $(`#live-details-${tid}`).html(`
-<br><a tabindex="0" class="btn btn-lg btn btn-success" role="button" href="${s.liveUrl}">Join Interactive Session</a><br><br>
+<br><a target="_blank" tabindex="0" class="btn btn-lg btn btn-success" role="button" href="${s.liveUrl}">Join Interactive Session</a><br><br>
 <b>Time:</b>&nbsp;${moment(s.start).format("hh:mm")} - ${moment(endtime).format("hh:mm")} (${rem})<br>
 <b>Presented by:</b>&nbsp;${s.presenters.filter(x=>x).join("; ").trim()}<br>
 <b>Abstract:</b>&nbsp;${s.abstract.substring(0,500)}`
